@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import './PharmacyRegistration.css';
 
-const PharmacyRegistration = () => {
+const PharmRegistration = () => {
     const navigate = useNavigate();
     const [errors, setErrors] = useState({});
 
@@ -118,4 +118,4 @@ const PharmacyRegistration = () => {
     );
 };
 
-export default PharmacyRegistration;
+export default PharmRegistration;

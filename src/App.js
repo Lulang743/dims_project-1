@@ -10,6 +10,8 @@ import PharmacyRegistration from './PharmacyRegistration';
 import LoginPage from './LoginPage';
 import NdsoRegistration from './NdsoRegistration';
 import PharmacyDashboard from './PharmacyDashboard';
+import PharmRegistration from './add_drug';
+
 
 function App() {
   return (
@@ -20,11 +22,11 @@ function App() {
         <Route path="/ndsoRegistration" element={<NdsoRegistration />} />
         <Route path="/" element={<WelcomePage />} />
         <Route path="/pharmacyDashboard" element={<PharmacyDashboard />}>
-          <Route path="create" element={<Create />} />
-          <Route path="view" element={<View />} />
-          <Route path="home" element={<Home />} />
-          <Route path="checkout" element={<Checkout />} />
-          <Route path="update/:id" element={<Update />} />
+        <Route path="PharmRegistration" element={<add_drug />} />
+        <Route path="view" element={<View />} />
+        <Route path="home" element={<Home />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="update/:id" element={<Update />} />
         </Route>
       </Routes>
     </Router>

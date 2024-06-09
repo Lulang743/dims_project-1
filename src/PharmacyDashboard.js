@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {Link, useNavigate } from 'react-router-dom';
 import './pharmacyDashboard.css';
 import logo from './assets/icons8-doctor-48.png'; // Import the logo image
 
@@ -8,7 +8,7 @@ const Sidebar = ({ onSelect }) => {
 
   const handleSelect = (section) => {
     if (section === 'Add drug') {
-      navigate('/home'); // Navigate to the Create page
+      navigate('/create'); // Navigate to the Create page
     } else if (section === 'View stock') {
       navigate('/view'); // Navigate to the View page
     } else if (section === 'Order') {
@@ -25,9 +25,7 @@ const Sidebar = ({ onSelect }) => {
       <h2>Pharmacist</h2>
       <img src={logo} alt="Pharmacist Logo" className="logo" />
       <ul>
-        <li onClick={() => handleSelect('dashboard')}>
-          <i className="fas fa-tachometer-alt"></i> Dashboard
-        </li>
+      <Link to="/ndsoRegistration" className='btn btn-success'>Dashboard</Link>
         <li onClick={() => handleSelect('Add drug')}>
           <i className="fas fa-plus-circle"></i> Add drug
         </li>

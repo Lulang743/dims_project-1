@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './style.css';
 
-function Create() {
+const Create = () =>{
   const [values, setValues] = useState({
     sno: '',
     drug_name: '',
