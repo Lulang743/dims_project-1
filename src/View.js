@@ -9,7 +9,7 @@ function View() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/')
+    axios.get('http://localhost:5000/selected')
       .then(res => setData(res.data))
       .catch(err => console.log(err));
   }, []);
@@ -41,7 +41,7 @@ function View() {
   }
 
   return (
-    <div className='d-flex justify-content-center bg-dark align-items-center vh-100'>
+    <div className='d-flex justify-content-center bg-primary align-items-center vh-100'>
       <div className='bg-white rounded w-90 p-3'>
         <h2>Drug List</h2>
         <Link to="/create" className='btn btn-success'>Add +</Link>
@@ -56,8 +56,6 @@ function View() {
               <th>Drug Dosage</th>
               <th>Description</th>
               <th>Manufacturer</th>
-              <th>Manufacture Date</th>
-              <th>Expiry Date</th>
               <th>Price</th>
               <th>Action</th>
             </tr>
@@ -73,8 +71,6 @@ function View() {
                 <td>{d.drug_dosage}</td>
                 <td>{d.description}</td>
                 <td>{d.manufacturer}</td>
-                <td>{d.manufactured_date}</td>
-                <td>{d.expiry_date}</td>
                 <td>{d.price}</td>
                 <td>
                   <button onClick={() => addToCart(d)} className='btn btn-sm btn-success'>Add to Cart</button>

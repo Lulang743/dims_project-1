@@ -25,7 +25,7 @@ const Sidebar = ({ onSelect }) => {
       <h2>Pharmacist</h2>
       <img src={logo} alt="Pharmacist Logo" className="logo" />
       <ul>
-      <Link to="/ndsoRegistration" className='btn btn-success'>Dashboard</Link>
+      <Link to="/view" className='btn btn-success'>Dashboard</Link>
         <li onClick={() => handleSelect('Add drug')}>
           <i className="fas fa-plus-circle"></i> Add drug
         </li>

@@ -18,7 +18,7 @@ const Sidebar = () => {
       <h2>Pharmacist</h2>
       <img src={logo} alt="Pharmacist Logo" className="logo" />
       <ul>
-        <li onClick={() => handleSelect('dashboard')}>
+        <li onClick={() => handleSelect('create')}>
           <i className="fas fa-tachometer-alt"></i> Dashboard
         </li>
         <li onClick={() => handleSelect('Add drug')}>

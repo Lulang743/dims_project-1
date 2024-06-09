@@ -1,201 +1,121 @@
-import React from 'react';
-import './style.css';
-
-const useStyles = makeStyles((theme) => ({
-  header: {
-    backgroundColor: 'whitesmoke',
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(3),
-    borderRadius: 5,
-  },
-  titleLabel: {
-    color: 'black',
-    fontSize: '24px',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  tableContainer: {
-    borderRadius: 10,
-    boxShadow: `0px 3px 5px rgba(0, 0, 0, 0.1)`,
-    backgroundColor: '#ffffff',
-    marginTop: theme.spacing(3),
-    overflow: 'hidden',
-    width: 1200,
-    paddingRight: '10px'
-  },
-  tableHeaderCell: {
-    backgroundColor: '#0098da',
-    color: 'white',
-    fontWeight: 'bold',
-    padding: theme.spacing(2),
-  },
-  tableRow: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: '#f9f9f9',
-    },
-  },
-  actionButton: {
-    backgroundColor: 'white',
-    color: 'black',
-    '&:hover': {
-      backgroundColor: '#0077b6',
-      color : 'white',
-    },
-  },
-}));
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
+import './PharmacyRegistration.css';
 
 const ViewDrugs = () => {
-  const classes = useStyles();
+    const navigate = useNavigate();
+    const [errors, setErrors] = useState({});
 
-  // Sample data for table (replace with your data)
-  const rows = [
-    { SNO: 1, DrugName: 'Drug A', Category: 'Category 1', Quantity: 100, BrandName: 'Xy', DrugUnit: 50, Description: 'okay fine', Manufacturer: 'Manufacturer X', DateOfManufacture: '2024-01-01', DateOfExpiry: '2025-01-01' }
-    // Add more rows as needed
-  ];
+    const [values, setValues] = useState({
+        pharmacyName: '',
+        pharmacyAddress: '',
+        email: '',
+        password: '',
 
-  const handleOrderButtonClick = () => {
-    window.location.href = '/DrugOrder'; 
-    console.log('Order button clicked');
-  };
+        phoneNumber: ''
+      });
 
-  return (
-   <div className='container-class'>
-     <Container maxWidth="md">
-   
-   <Box className={classes.header}>
-     <Typography variant="h5" className={classes.titleLabel}>
-       Available Stock
-     </Typography>
-   </Box>
+    const handleSubmit = (e) => {
+        //let formErrors = {};
 
-   <TableContainer component={Box} className={classes.tableContainer}>
-     <Table>
-       <TableHead>
-         <TableRow>
-           <TableCell className={classes.tableHeaderCell}>SNO</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Drug Name</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Category</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Quantity</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Brand Name</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Drug Unit (ml)</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Description</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Manufacturer</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Manufacture Date</TableCell>
-           <TableCell className={classes.tableHeaderCell}>Expiry Date</TableCell>
-         </TableRow>
-       </TableHead>
-       <TableBody>
-         {rows.map((row, index) => (
-           <TableRow key={index} className={classes.tableRow}>
-             <TableCell>{row.SNO}</TableCell>
-             <TableCell>{row.DrugName}</TableCell>
-             <TableCell>{row.Category}</TableCell>
-             <TableCell>{row.Quantity}</TableCell>
-             <TableCell>{row.BrandName}</TableCell>
-             <TableCell>{row.DrugUnit}</TableCell>
-             <TableCell>{row.Description}</TableCell>
-             <TableCell>{row.Manufacturer}</TableCell>
-             <TableCell>{row.DateOfManufacture}</TableCell>
-             <TableCell>{row.DateOfExpiry}</TableCell>
-             <TableCell>
-             </TableCell>
-           </TableRow>
-         ))}
-          {rows.map((row, index) => (
-           <TableRow key={index} className={classes.tableRow}>
-             <TableCell>{row.SNO}</TableCell>
-             <TableCell>{row.DrugName}</TableCell>
-             <TableCell>{row.Category}</TableCell>
-             <TableCell>{row.Quantity}</TableCell>
-             <TableCell>{row.BrandName}</TableCell>
-             <TableCell>{row.DrugUnit}</TableCell>
-             <TableCell>{row.Description}</TableCell>
-             <TableCell>{row.Manufacturer}</TableCell>
-             <TableCell>{row.DateOfManufacture}</TableCell>
-             <TableCell>{row.DateOfExpiry}</TableCell>
-             <TableCell>
-             </TableCell>
-           </TableRow>
-         ))}
-          {rows.map((row, index) => (
-           <TableRow key={index} className={classes.tableRow}>
-             <TableCell>{row.SNO}</TableCell>
-             <TableCell>{row.DrugName}</TableCell>
-             <TableCell>{row.Category}</TableCell>
-             <TableCell>{row.Quantity}</TableCell>
-             <TableCell>{row.BrandName}</TableCell>
-             <TableCell>{row.DrugUnit}</TableCell>
-             <TableCell>{row.Description}</TableCell>
-             <TableCell>{row.Manufacturer}</TableCell>
-             <TableCell>{row.DateOfManufacture}</TableCell>
-             <TableCell>{row.DateOfExpiry}</TableCell>
-             <TableCell>
-               
-             </TableCell>
-           </TableRow>
-         ))}
-          {rows.map((row, index) => (
-           <TableRow key={index} className={classes.tableRow}>
-             <TableCell>{row.SNO}</TableCell>
-             <TableCell>{row.DrugName}</TableCell>
-             <TableCell>{row.Category}</TableCell>
-             <TableCell>{row.Quantity}</TableCell>
-             <TableCell>{row.BrandName}</TableCell>
-             <TableCell>{row.DrugUnit}</TableCell>
-             <TableCell>{row.Description}</TableCell>
-             <TableCell>{row.Manufacturer}</TableCell>
-             <TableCell>{row.DateOfManufacture}</TableCell>
-             <TableCell>{row.DateOfExpiry}</TableCell>
-             <TableCell>
-              
-             </TableCell>
-           </TableRow>
-         ))}
-          {rows.map((row, index) => (
-           <TableRow key={index} className={classes.tableRow}>
-             <TableCell>{row.SNO}</TableCell>
-             <TableCell>{row.DrugName}</TableCell>
-             <TableCell>{row.Category}</TableCell>
-             <TableCell>{row.Quantity}</TableCell>
-             <TableCell>{row.BrandName}</TableCell>
-             <TableCell>{row.DrugUnit}</TableCell>
-             <TableCell>{row.Description}</TableCell>
-             <TableCell>{row.Manufacturer}</TableCell>
-             <TableCell>{row.DateOfManufacture}</TableCell>
-             <TableCell>{row.DateOfExpiry}</TableCell>
-             <TableCell>
-               
-             </TableCell>
-           </TableRow>
-         ))}
-          {rows.map((row, index) => (
-           <TableRow key={index} className={classes.tableRow}>
-             <TableCell>{row.SNO}</TableCell>
-             <TableCell>{row.DrugName}</TableCell>
-             <TableCell>{row.Category}</TableCell>
-             <TableCell>{row.Quantity}</TableCell>
-             <TableCell>{row.BrandName}</TableCell>
-             <TableCell>{row.DrugUnit}</TableCell>
-             <TableCell>{row.Description}</TableCell>
-             <TableCell>{row.Manufacturer}</TableCell>
-             <TableCell>{row.DateOfManufacture}</TableCell>
-             <TableCell>{row.DateOfExpiry}</TableCell>
-             <TableCell>
-             </TableCell>
-           </TableRow>
-         ))}
-       </TableBody>
-     </Table>
-   </TableContainer>
- </Container>
- <div class="button-row">
-        <button class="btn">Add New Drug</button>
-        <button class="btn">Update Drug</button>
-        <button class="btn">Delete Drug</button>
-    </div>
-</div>
+        // Email validation
+        //if (!email.includes('@')) {
+          //  formErrors.email = "Invalid email format";
+       // }//
 
-  );
+        // Password validation
+        //const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+        //if (!passwordRegex.test(password)) {
+          //  formErrors.password = "Password must be at least 8 characters long and include both letters and numbers";
+        //}
+
+        //if (password !== confirmPassword) {
+         //   formErrors.confirmPassword = "Passwords do not match";
+        //}
+
+        //if (Object.keys(formErrors).length > 0) {
+          //  setErrors(formErrors);
+            //return;
+        //}
+
+        // Assuming registration is successful, navigate to the pharmacy dashboard
+       //console.log({ pharmacyName, pharmacyAddress, email, password, phoneNumber });
+        e.preventDefault();
+        axios.post('http://localhost:5000/create_pharmacist', values)
+           .then((res) => {
+            navigate('/loginPage'); // Navigate to the View page after submission
+      })
+      .catch((err) => {
+        //setError('Error creating drug. Please try again.');
+        console.log(err);
+      });
+        navigate('/Home');
+    };
+
+    return (
+        <div className="registration-container">
+            <form className="registration-form" onSubmit={handleSubmit}>
+                <h2>Pharmacy SignUp</h2>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        id="pharmacyName"
+                        value={values.pharmacyName}
+                        onChange={(e) => setValues({ ...values, pharmacyName: e.target.value })}
+                        placeholder="Enter Pharmacy Name"
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        id="pharmacyAddress"
+                        value={values.pharmacyAddress}
+                        onChange={(e) => setValues({ ...values, pharmacyAddress: e.target.value })}
+                        placeholder="Enter Pharmacy Address"
+                        required
+                    />
+                </div>
+                <div className="form-group">
+                    <input
+                        type="email"
+                        id="email"
+                        value={values.email}
+                        onChange={(e) => setValues({ ...values, email: e.target.value })}
+                        placeholder="Enter Emailsssssssssssssssssss"
+                        required
+                    />
+                    {errors.email && <span className="error-message">{errors.email}</span>}
+                </div>
+                <div className="form-group">
+                    <input
+                        type="password"
+                        id="password"
+                        value={values.password}
+                        onChange={(e) => setValues({ ...values, password: e.target.value })}
+                        placeholder="Enter Passwordsssssssssssssssssssssssss"
+                        required
+                    />
+                    {errors.password && <span className="error-message">{errors.password}</span>}
+                </div>
+                <div className="form-group">
+                    <input
+                        type="text"
+                        id="phoneNumber"
+                        value={values.phoneNumber}
+                        onChange={(e) => setValues({ ...values, phoneNumber: e.target.value })}
+                        placeholder="Enter Phone Numberrrrrrrrrrrrrrrrrrrrrrrrrr"
+                        required
+                    />
+                </div>
+                <button type="submit">Register</button>
+                <div className="signin-link">
+                    Already have an account? <Link to="/LoginPage">Sign In</Link>
+                </div>
+            </form>
+        </div>
+    );
 };
 
 export default ViewDrugs;
