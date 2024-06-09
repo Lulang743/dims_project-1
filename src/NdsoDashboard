@@ -1,0 +1,36 @@
+import React, { useState } from 'react';
+
+const Sidebar = ({ onSelect }) => {
+  return (
+    <div className="sidebar">
+      <h2>Sidebar</h2>
+      <ul>
+        <li onClick={() => onSelect('dashboard')}>Dashboard</li>
+        <li onClick={() => onSelect('customers')}>Customers</li>
+        <li onClick={() => onSelect('orders')}>Orders</li>
+      </ul>
+    </div>
+  );
+};
+
+const MainContent = ({ section }) => {
+  return (
+    <div className="main-content">
+      <h2>{section.charAt(0).toUpperCase() + section.slice(1)}</h2>
+      <p>This is the {section} section.</p>
+    </div>
+  );
+};
+
+function App() {
+  const [selectedSection, setSelectedSection] = useState('dashboard');
+
+  return (
+    <div className="App">
+      <Sidebar onSelect={setSelectedSection} />
+      <MainContent section={selectedSection} />
+    </div>
+  );
+}
+
+export default App;

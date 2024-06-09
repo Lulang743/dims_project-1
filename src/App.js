@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './Home';
+import Create from './Create';
+import Update from './Update';
+import View from './View';
+import Checkout from './Checkout';
+import WelcomePage from './WelcomePage';
+import PharmacyRegistration from './PharmacyRegistration';
+import LoginPage from './LoginPage';
+import NdsoRegistration from './NdsoRegistration';
+import PharmacyDashboard from './PharmacyDashboard';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/pharmacyRegistration" element={<PharmacyRegistration />} />
+        <Route path="/loginPage" element={<LoginPage />} />
+        <Route path="/ndsoRegistration" element={<NdsoRegistration />} />
+        <Route path="/" element={<WelcomePage />} />
+        <Route path="/pharmacyDashboard" element={<PharmacyDashboard />}>
+          <Route path="create" element={<Create />} />
+          <Route path="view" element={<View />} />
+          <Route path="home" element={<Home />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="update/:id" element={<Update />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 

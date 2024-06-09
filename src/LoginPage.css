@@ -1,0 +1,61 @@
+/* LoginPage.css */
+
+.login-container {
+    display: flex;
+    flex-direction: column; /* Display children in a column layout */
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    width: 300;
+    background-image: url('./assets/martin-martz-1hg6NpO0kIk-unsplash.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  
+  .login-title {
+    margin-bottom: 20px; /* Add space below the title */
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+  }
+  
+  .login-form {
+    width: 500px; /* Set your desired width */
+    height: 250;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .login-form div {
+    margin-bottom: 10px;
+  }
+  
+  .login-form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .login-form button:hover {
+    background-color: #0056b3;
+  }
+  
