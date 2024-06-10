@@ -13,6 +13,9 @@ import PharmacyDashboard from './PharmacyDashboard';
 import LoginPages from './NdsoLoginPage';
 import Dashboard from './DashBoard';
 import OrderDetails from './OderDeatails';
+import ViewDrugs from './ViewDrugs';
+import NdsoCreate from './ndsoCreate';
+
 
 function App() {
   return (
@@ -20,7 +23,9 @@ function App() {
       <Routes>
         <Route path='/pharmacyRegistration' element={<PharmacyRegistration />} />
         <Route path="/loginPage" element={<LoginPage />} />
-        <Route path="/ndsologinPage" element={<LoginPages />} />
+        <Route path="/NdsologinPage" element={<LoginPages />} />
+        <Route path="/ndsoCreate" element={<NdsoCreate />} />
+        <Route path="/viewDrugs" element={<ViewDrugs />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/orderDetails" element={<OrderDetails />} />
         <Route path='/ndsoRegistration' element={<NdsoRegistration />} />
@@ -29,6 +34,7 @@ function App() {
         <Route path="/view" element={<View />} />
         <Route path="/home" element={<Home />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </Router>
   );

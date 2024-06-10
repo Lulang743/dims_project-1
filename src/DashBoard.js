@@ -8,9 +8,9 @@ const Sidebar = ({ onSelect }) => {
 
   const handleSelect = (section) => {
     if (section === 'Add drug') {
-      navigate('/create'); // Navigate to the Create page
+      navigate('/ndsocreate'); // Navigate to the Create page
     } else if (section === 'View stock') {
-      navigate('/home'); // Navigate to the View page
+      navigate('/viewDrugs'); // Navigate to the View page
     } else if (section === 'Order') {
       navigate('/orderDetails'); // Navigate to the Checkout page
     } else if (section === 'dashboard') {
