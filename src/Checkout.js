@@ -40,7 +40,9 @@ function Checkout(props) {
     cvv: '' ,
     drug_name :'',
     quantity : '',
-    amount: ''
+    amount: '',
+    phone_number:'',
+    status:'Pending'
 
   });
 
@@ -113,6 +115,96 @@ function Checkout(props) {
           </div>
           </>
         )}
+        {paymentMethod === 'Mpesa' && (
+          <>
+           
+          <div className="form-group mb-3">
+          </div>
+          <div className="d-flex form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder=" drug name"
+              value={values.drug_name}
+              onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Quantity"
+              value={values.quantity}
+              onChange={(e) => setValues({ ...values, quantity: e.target.value })}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="amount"
+              value={values.amount}
+              onChange={(e) => setValues({ ...values, amount: e.target.value })}
+            />
+          </div>
+          </>
+        )}
+        {paymentMethod === 'EcoCash' && (
+          <>
+           
+          <div className="form-group mb-3">
+          </div>
+          <div className="d-flex form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder=" drug name"
+              value={values.drug_name}
+              onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Quantity"
+              value={values.quantity}
+              onChange={(e) => setValues({ ...values, quantity: e.target.value })}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="amount"
+              value={values.amount}
+              onChange={(e) => setValues({ ...values, amount: e.target.value })}
+            />
+          </div>
+          </>
+        )}
+        {paymentMethod === 'CPay' && (
+          <>
+           
+          <div className="form-group mb-3">
+          </div>
+          <div className="d-flex form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder=" drug name"
+              value={values.drug_name}
+              onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Quantity"
+              value={values.quantity}
+              onChange={(e) => setValues({ ...values, quantity: e.target.value })}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="amount"
+              value={values.amount}
+              onChange={(e) => setValues({ ...values, amount: e.target.value })}
+            />
+          </div>
+          </>
+        )}
         </form>
 
       <form onSubmit={handleSubmit}>
@@ -121,6 +213,9 @@ function Checkout(props) {
           <select id="paymentMethod" value={paymentMethod} onChange={handlePaymentMethodChange}>
             <option value="">Choose a Payment Method</option>
             <option value="creditCard">Credit Card</option>
+            <option value="Mpesa">Mpesa Payment</option>
+            <option value="EcoCash">EcoCash Payment</option>
+            <option value="CPay">CPay Payment</option>
             {/* Add other payment methods if supported */}
           </select>
         </div>
@@ -144,7 +239,49 @@ function Checkout(props) {
             </div>
           </>
         )}
+         {paymentMethod === 'Mpesa' && (
+          <div className="form-group">
+            <p>You Are Paying with Mpesa.</p>
+            <div className="form-group">
+              <label htmlFor="name">Name of Customer:</label>
+              <input type="text" id="name" name="name" value={values.phone_number} onChange={(e) => setValues({ ...values, phone_number: e.target.value })}  required />
+            </div>
+            <div className="form-group">
+              <label htmlFor="cardNumber">Phone Number:</label>
+              <input type="number" id="cardNumber" name="cardNumber" value={values.phone_number} onChange={(e) => setValues({ ...values, phone_number: e.target.value })} required />
+            </div> 
+          </div>
+        )} {paymentMethod === 'EcoCash' && (
+          <div className="form-group">
+               <p>You Are Paying with EcoCash.</p>
+               <div className="form-group">
+                   <label htmlFor="name">Name of Customer:</label>
+                  <input type="text" id="name" name="name" value={values.card_name} onChange={(e) => setValues({ ...values, card_name: e.target.value })}  required />
+               </div>
+               <div className="form-group">
+                 <label htmlFor="cardNumber">Phone Number:</label>
+              <input type="number" id="cardNumber" name="cardNumber" value={values.phone_number} onChange={(e) => setValues({ ...values, phone_number: e.target.value })} required />
+            </div> 
+          </div>
+        )}{paymentMethod === 'CPay' && (
+          <div className="form-group">
+               <p>You Are Paying with CPay.</p>
+               <div className="form-group">
+                   <label htmlFor="name">Name of Customer:</label>
+                  <input type="text" id="name" name="name" value={values.card_name} onChange={(e) => setValues({ ...values, card_name: e.target.value })}  required />
+               </div>
+               <div className="form-group">
+                 <label htmlFor="cardNumber">Phone Number:</label>
+              <input type="number" id="cardNumber" name="cardNumber" value={values.phone_number} onChange={(e) => setValues({ ...values, phone_number: e.target.value })} required />
+            </div> 
+          </div>
+        )}
+
+        <div className='d-flex form-group mb-3'>
         <button type="submit" className="btn btn-primary" onClick={handleSubmit} >Pay Now</button>
+    
+        </div>
+        
       </form>
     </div>
   );

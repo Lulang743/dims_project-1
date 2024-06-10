@@ -30,6 +30,7 @@ function OrderDeails() {
                             <th>Quantity</th>
                             <th>Amount</th>
                             <th>Customer Name</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -41,6 +42,7 @@ function OrderDeails() {
                                 <td>{d.quantity}</td>
                                 <td>{d.amount}</td>
                                 <td>{d.name}</td>
+                                <td>{d.status}</td>
                                
                                 <td>
                                     <Link to={`/update/${d.id}`} className='btn btn-sm btn-primary'>Update</Link>
