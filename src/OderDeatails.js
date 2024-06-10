@@ -22,7 +22,6 @@ function OrderDeails() {
         <div className='d-flex justify-content-center bg-primary align-items-center vh-100'>
             <div className='bg-white rounded w-90 p-3'>
                 <h2>Available Orders</h2>
-                <Link to="/Ndsocreate" className='btn btn-success'>Add +</Link>
                 <h1>   </h1>
                 <table className='table'>
                     <thead>
