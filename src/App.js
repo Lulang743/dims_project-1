@@ -15,6 +15,7 @@ import Dashboard from './DashBoard';
 import OrderDetails from './OderDeatails';
 import ViewDrugs from './ViewDrugs';
 import NdsoCreate from './ndsoCreate';
+import Checks from './checks';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/pharmacyRegistration' element={<PharmacyRegistration />} />
         <Route path="/loginPage" element={<LoginPage />} />
         <Route path="/NdsologinPage" element={<LoginPages />} />
+        <Route path="/checks" element={<Checks />} />
         <Route path="/ndsoCreate" element={<NdsoCreate />} />
         <Route path="/viewDrugs" element={<ViewDrugs />} />
         <Route path="/dashboard" element={<Dashboard />} />

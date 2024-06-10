@@ -37,7 +37,11 @@ function Checkout(props) {
     
     card_name: '',
     card_number: '',
-    cvv: '' 
+    cvv: '' ,
+    drug_name :'',
+    quantity : '',
+    amount: ''
+
   });
 
   const handleSubmit = (event) => {
@@ -73,8 +77,44 @@ function Checkout(props) {
   }
 
   return (
-    <div className='container'>
+    <div className='container '>
       <h2>Checkout</h2>
+      <form onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label htmlFor="paymentMethod">Order Details:</label>
+        </div>
+        {paymentMethod === 'creditCard' && (
+          <>
+           
+          <div className="form-group mb-3">
+          </div>
+          <div className="d-flex form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder=" drug name"
+              value={values.drug_name}
+              onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="Quantity"
+              value={values.quantity}
+              onChange={(e) => setValues({ ...values, quantity: e.target.value })}
+            />
+            <input
+              type="number"
+              className="form-control"
+              placeholder="amount"
+              value={values.amount}
+              onChange={(e) => setValues({ ...values, amount: e.target.value })}
+            />
+          </div>
+          </>
+        )}
+        </form>
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="paymentMethod">Payment Method:</label>

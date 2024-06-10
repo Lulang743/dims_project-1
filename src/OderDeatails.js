@@ -1,61 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-function OrderDetails() {
-  const { orderId } = useParams(); // Get order ID from route parameter
-  const [orderData, setOrderData] = useState(null);
+function OrderDeails() {
+    const [data, setData] = useState([]);
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    axios.get(`http://localhost:5000/orders`) // Fetch order data by ID
-      .then(res => setOrderData(res.data))
-      .catch(err => console.log(err));
-  },);
+    useEffect(() => {
+        axios.get('http://localhost:5000/customer')
+            .then(res => setData(res.data))
+            .catch(err => console.log(err));
+    }, []);
 
-  if (!orderData) {
-    return <p>Loading order details...</p>;
-  }
-
-  const { _id, date, customer, items, totalPrice, status } = orderData;
-
-  return (
-    <div className="container">
-      <h2>Order Details (Order ID: {_id})</h2>
-      <p>Order Date: {date}</p>
-      {customer && ( // Check if customer data exists
-        <div>
-          <h3>Customer Details</h3>
-          <p>Name: {customer.name}</p>
-          <p>Email: {customer.email}</p>
-          {/* ... other customer details if available ... */}
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:5000/delete_user${id}`)
+            .then(res => navigate('/'))
+            .catch(err => console.log(err));
+    }
+    return (
+        <div className='d-flex justify-content-center bg-primary align-items-center vh-100'>
+            <div className='bg-white rounded w-90 p-3'>
+                <h2>Available Orders</h2>
+                <Link to="/Ndsocreate" className='btn btn-success'>Add +</Link>
+                <h1>   </h1>
+                <table className='table'>
+                    <thead>
+                        <tr>
+                            <th>Drug Name</th>
+                            <th>Quantity</th>
+                            <th>Amount</th>
+                            <th>Customer Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Array.isArray(data) && data.map((d, i) => (
+                            <tr key={i}>
+                               
+                                <td>{d.drug_name}</td>
+                                <td>{d.quantity}</td>
+                                <td>{d.amount}</td>
+                                <td>{d.name}</td>
+                               
+                                <td>
+                                    <Link to={`/update/${d.id}`} className='btn btn-sm btn-primary'>Update</Link>
+                                    <Link onClick={e => handleDelete(d.id)} className='btn btn-sm btn-danger'>Delete</Link>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
         </div>
-      )}
-      <h3>Ordered Items</h3>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Drug Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item, i) => (
-            <tr key={i}>
-              <td>{item.drug_name}</td>
-              <td>{item.quantity}</td>
-              <td>{item.price}</td>
-            </tr>
-          ))}
-          <tr>
-            <td colSpan="2">Total Price:</td>
-            <td>{totalPrice}</td>
-          </tr>
-        </tbody>
-      </table>
-      <p>Order Status: {status}</p>
-    </div>
-  );
+    );
 }
-
-export default OrderDetails;
+export default OrderDeails;
