@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import View from './View';
 
 
@@ -16,8 +18,9 @@ function Checkout(props) {
       paymentMethod: paymentMethod,
       name: name,
       items: props.cart,
-      totalPrice: props.getTotalPrice(),
+    
     };
+
 
     try {
       const response = await axios.post('http://localhost:5000/orderss', orderDetails); 
