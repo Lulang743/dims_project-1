@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import View from './View';
+
 
 function Checkout(props) {
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -7,16 +9,27 @@ function Checkout(props) {
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
 
-  const handleCheckout = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+  const handleCheckout = async (e) => {
+    e.preventDefault(); 
 
-    // Implement payment processing logic using your chosen payment gateway (e.g., Stripe, PayPal)
-    // Here's a placeholder example for illustration:
-    console.log("Processing payment...");
+    const orderDetails = {
+      paymentMethod: paymentMethod,
+      name: name,
+      items: props.cart,
+      totalPrice: props.getTotalPrice(),
+    };
 
-    // After successful payment, clear cart and redirect to confirmation page
-    props.clearCart();
-    props.navigate('/confirmation'); // Assuming a confirmation route exists
+    try {
+      const response = await axios.post('http://localhost:5000/orderss', orderDetails); 
+            console.log("Order details submitted:", response.data);
+
+      // After successful submission, clear cart and redirect to confirmation page
+      props.clearCart();
+      props.navigate('/confirmation');
+    } catch (error) {
+      console.error("Error submitting order:", error);
+      // Handle errors appropriately, e.g., display an error message to the user
+    }
   }
 
   const handlePaymentMethodChange = (e) => {
