@@ -1,72 +1,68 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
 import './NdsoRegistration.css';
 
 const NdsoRegistration = () => {
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState('');
-
   const navigate = useNavigate();
+  const [error, setErrors] = useState({});
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
+  const [values, setValues] = useState({
+      fullName: '',
+      email: '',
+      phoneNumber:'',
+      password: ''
+    });
 
-    if (!fullName || !email || !phoneNumber || !password || !confirmPassword) {
-      setError('Please fill in all fields.');
-      return;
-    }
+    const handleSubmit = (e) => {
+      //let formErrors = {};
 
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
+      // Email validation
+      //if (!email.includes('@')) {
+        //  formErrors.email = "Invalid email format";
+     // }//
 
-    console.log('Signing up with:', { fullName, email, phoneNumber, password });
+      // Password validation
+      //const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+      //if (!passwordRegex.test(password)) {
+        //  formErrors.password = "Password must be at least 8 characters long and include both letters and numbers";
+      //}
 
-    setFullName('');
-    setEmail('');
-    setPhoneNumber('');
-    setPassword('');
-    setConfirmPassword('');
-    setError('');
+      //if (password !== confirmPassword) {
+       //   formErrors.confirmPassword = "Passwords do not match";
+      //}
 
-    navigate('/create');
-  };
+      //if (Object.keys(formErrors).length > 0) {
+        //  setErrors(formErrors);
+          //return;
+      //}
 
-  const handleSignIn = (e) => {
-    e.preventDefault();
-
-    if (!email || !password) {
-      setError('Please enter both email and password.');
-      return;
-    }
-
-    console.log('Signing in with:', { email, password });
-
-    setEmail('');
-    setPassword('');
-    setError('');
-
-    navigate('/NdsoLoginPage');
+      // Assuming registration is successful, navigate to the pharmacy dashboard
+     //console.log({ pharmacyName, pharmacyAddress, email, password, phoneNumber });
+      e.preventDefault();
+      axios.post('http://localhost:5000/create_ndso', values)
+         .then((res) => {
+          navigate('/NdsologinPage'); // Navigate to the View page after submission
+    })
+    .catch((err) => {
+      //setError('Error creating drug. Please try again.');
+      console.log(err);
+    });
+      navigate('/');
   };
 
   return (
     <div className="registration-container">
       <div className="form-container">
         <h2 className="form-title">NDSO SignUp</h2>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <form className="registration-form">
+        <form className="registration-form" onSubmit={handleSubmit}>
           <div className="form-group">
             
             <input
               type="text"
               id="fullName"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+              value={values.fullName}
+              onChange={(e) => setValues({ ...values, fullName: e.target.value })}
               placeholder="Enter Full Name"
               required
             />
@@ -76,8 +72,8 @@ const NdsoRegistration = () => {
             <input
               type="email"
               id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={values.email}
+              onChange={(e) => setValues({ ...values, email: e.target.value })}
               placeholder="Enter Email"
               required
             />
@@ -87,8 +83,8 @@ const NdsoRegistration = () => {
             <input
               type="text"
               id="phoneNumber"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
+              value={values.phoneNumber}
+              onChange={(e) => setValues({ ...values, phoneNumber: e.target.value })}
               placeholder="Enter Phone Number"
               required
             />
@@ -98,8 +94,8 @@ const NdsoRegistration = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={values.password}
+              onChange={(e) => setValues({ ...values, password: e.target.value })}
               placeholder="Enter Password"
               required
             />
@@ -108,14 +104,12 @@ const NdsoRegistration = () => {
             <input
               type="password"
               id="confirmPassword"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm Password"
               required
             />
           </div>
           <div className="form-group">
-            <button type="submit" onClick={handleSignUp}>Sign Up</button>
+            <button type="submit" onClick={handleSubmit}>Sign Up</button>
     
           </div>
         </form>

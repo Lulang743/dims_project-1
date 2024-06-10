@@ -12,15 +12,16 @@ import NdsoRegistration from './NdsoRegistration';
 import PharmacyDashboard from './PharmacyDashboard';
 import PharmaRegistration from './ViewDrugs';
 import ViewDrugs from './ViewDrugs';
-
-
+import NDSODashboard from './NDSODashboard';
+import NdsoDashboard from './NDSODashboard';
 function App() {
   return (
     <Router>
       <Routes>
         <Route path='/pharmacyRegistration' element={<PharmacyRegistration />} />
         <Route path="/loginPage" element={<LoginPage />} />
-        <Route path="/ndsoRegistration" element={<NdsoRegistration />} />
+        <Route path='/ndsoRegistration' element={<NdsoRegistration />} />
+        <Route path='/nDSODashboard' element={<NdsoDashboard />} />
         <Route path="/" element={<WelcomePage />} />
         <Route path="/pharmacyDashboard" element={<PharmacyDashboard />} />
         <Route path="/view" element={<View />} />

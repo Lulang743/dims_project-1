@@ -9,7 +9,7 @@ const WelcomePage = () => {
       <p className="register-text">Register as:</p>
       <div className="button-container">
         <Link to="/PharmacyRegistration" className='btn btn-primary'>Pharmacist</Link>
-        <Link to="/NdsoRegistration" className='btn btn-primary'>NDSO</Link>
+        <Link to="/ndsoRegistration" className='btn btn-primary'>NDSO</Link>
       </div>
     </div>
   );
