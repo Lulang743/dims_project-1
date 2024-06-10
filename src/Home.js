@@ -8,7 +8,7 @@ function Home() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/')
+        axios.get('http://localhost:5000/selected')
             .then(res => setData(res.data))
             .catch(err => console.log(err));
     }, []);
@@ -37,8 +37,6 @@ function Home() {
                             <th>Drug Dosage(ml)</th>
                             <th>Description</th>
                             <th>Manufacturer</th>
-                            <th>Manufacture Date</th>
-                            <th>Expiry Date</th>
                             <th>Price</th>
                             <th>Action</th>
                         </tr>
@@ -54,8 +52,6 @@ function Home() {
                                 <td>{d.drug_dosage}</td>
                                 <td>{d.description}</td>
                                 <td>{d.manufacturer}</td>
-                                <td>{d.manufactured_date}</td>
-                                <td>{d.expiry_date}</td>
                                 <td>{d.price}</td>
                                 <td>
                                     <Link to={`/update/${d.id}`} className='btn btn-sm btn-primary'>Update</Link>

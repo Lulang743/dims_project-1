@@ -42,7 +42,7 @@ const NdsoRegistration = () => {
       e.preventDefault();
       axios.post('http://localhost:5000/create_ndso', values)
          .then((res) => {
-          navigate('/NdsologinPage'); // Navigate to the View page after submission
+          navigate('/ndsologinPage'); // Navigate to the View page after submission
     })
     .catch((err) => {
       //setError('Error creating drug. Please try again.');
@@ -114,7 +114,7 @@ const NdsoRegistration = () => {
           </div>
         </form>
         <div className="signin-link">
-          Don't have an account? <Link to="/LoginPage">Sign Up</Link>
+          Don't have an account? <Link to="/ndsologinPage">Sign Up</Link>
         </div>
       </div>
     </div>

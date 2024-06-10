@@ -10,18 +10,20 @@ import PharmacyRegistration from './PharmacyRegistration';
 import LoginPage from './LoginPage';
 import NdsoRegistration from './NdsoRegistration';
 import PharmacyDashboard from './PharmacyDashboard';
-import PharmaRegistration from './ViewDrugs';
-import ViewDrugs from './ViewDrugs';
-import NDSODashboard from './NDSODashboard';
-import NdsoDashboard from './NDSODashboard';
+import LoginPages from './NdsoLoginPage';
+import Dashboard from './DashBoard';
+import OrderDetails from './OderDeatails';
+
 function App() {
   return (
     <Router>
       <Routes>
         <Route path='/pharmacyRegistration' element={<PharmacyRegistration />} />
         <Route path="/loginPage" element={<LoginPage />} />
+        <Route path="/ndsologinPage" element={<LoginPages />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/orderDetails" element={<OrderDetails />} />
         <Route path='/ndsoRegistration' element={<NdsoRegistration />} />
-        <Route path='/nDSODashboard' element={<NdsoDashboard />} />
         <Route path="/" element={<WelcomePage />} />
         <Route path="/pharmacyDashboard" element={<PharmacyDashboard />} />
         <Route path="/view" element={<View />} />

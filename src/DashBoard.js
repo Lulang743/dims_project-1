@@ -10,9 +10,9 @@ const Sidebar = ({ onSelect }) => {
     if (section === 'Add drug') {
       navigate('/create'); // Navigate to the Create page
     } else if (section === 'View stock') {
-      navigate('/view'); // Navigate to the View page
+      navigate('/home'); // Navigate to the View page
     } else if (section === 'Order') {
-      navigate('/checkout'); // Navigate to the Checkout page
+      navigate('/orderDetails'); // Navigate to the Checkout page
     } else if (section === 'dashboard') {
       navigate('/update'); // Navigate to the WelcomePage
     } else {
@@ -22,7 +22,7 @@ const Sidebar = ({ onSelect }) => {
 
   return (
     <div className="sidebar">
-      <h2>Pharmacist</h2>
+      <h2>NDSO</h2>
       <img src={logo} alt="Pharmacist Logo" className="logo" />
       <ul>
         <li onClick={() => handleSelect('Add drug')}>
@@ -32,7 +32,7 @@ const Sidebar = ({ onSelect }) => {
           <i className="fas fa-plus-circle"></i> View drug stock
         </li>
         <li onClick={() => handleSelect('Order')}>
-          <i className="fas fa-box"></i> Order
+          <i className="fas fa-box"></i> Order Management
         </li>
       </ul>
     </div>
