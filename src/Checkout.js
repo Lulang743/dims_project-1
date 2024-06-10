@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-import View from './View';
-
+import { useNavigate } from 'react-router-dom';
 
 function Checkout(props) {
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -21,23 +19,38 @@ function Checkout(props) {
     
     };
 
-
     try {
-      const response = await axios.post('http://localhost:5000/orderss', orderDetails); 
-            console.log("Order details submitted:", response.data);
-
-      // After successful submission, clear cart and redirect to confirmation page
-      props.clearCart();
-      props.navigate('/confirmation');
+      
     } catch (error) {
       console.error("Error submitting order:", error);
-      // Handle errors appropriately, e.g., display an error message to the user
     }
   }
 
   const handlePaymentMethodChange = (e) => {
     setPaymentMethod(e.target.value);
   }
+  const [error, setError] = useState(''); // Added error state
+
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    
+    card_name: '',
+    card_number: '',
+    cvv: '' 
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    axios.post('http://localhost:5000/orderss', values)
+      .then((res) => {
+        navigate('/View'); // Navigate to the View page after submission
+      })
+      .catch((err) => {
+        setError('Error creating drug. Please try again.');
+        console.log(err);
+      });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +75,7 @@ function Checkout(props) {
   return (
     <div className='container'>
       <h2>Checkout</h2>
-      <form onSubmit={handleCheckout}>
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="paymentMethod">Payment Method:</label>
           <select id="paymentMethod" value={paymentMethod} onChange={handlePaymentMethodChange}>
@@ -75,23 +88,23 @@ function Checkout(props) {
           <>
             <div className="form-group">
               <label htmlFor="name">Name on Card:</label>
-              <input type="text" id="name" name="name" value={name} onChange={handleInputChange} required />
+              <input type="text" id="name" name="name" value={values.card_name} onChange={(e) => setValues({ ...values, card_name: e.target.value })}  required />
             </div>
             <div className="form-group">
               <label htmlFor="cardNumber">Card Number:</label>
-              <input type="number" id="cardNumber" name="cardNumber" value={cardNumber} onChange={handleInputChange} required />
+              <input type="number" id="cardNumber" name="cardNumber" value={values.card_number} onChange={(e) => setValues({ ...values, card_number: e.target.value })} required />
             </div>
             <div className="form-group">
               <label htmlFor="expiryDate">Expiry Date (MM/YY):</label>
-              <input type="text" id="expiryDate" name="expiryDate" value={expiryDate} onChange={handleInputChange} required />
+              <input type="text" id="expiryDate" name="expiryDate" value={values.expiry_date} onChange={(e) => setValues({ ...values, expiry_date: e.target.value })} required />
             </div>
             <div className="form-group">
               <label htmlFor="cvv">CVV:</label>
-              <input type="number" id="cvv" name="cvv" value={cvv} onChange={handleInputChange} required />
+              <input type="number" id="cvv" name="cvv" value={values.cvv} onChange={(e) => setValues({ ...values, cvv: e.target.value })} required />
             </div>
           </>
         )}
-        <button type="submit" className="btn btn-primary" disabled={!paymentMethod}>Pay Now</button>
+        <button type="submit" className="btn btn-primary" onClick={handleSubmit} >Pay Now</button>
       </form>
     </div>
   );
