@@ -17,7 +17,6 @@ import ViewDrugs from './ViewDrugs';
 import NdsoCreate from './ndsoCreate';
 import Checks from './checks';
 
-
 function App() {
   return (
     <Router>
