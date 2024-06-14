@@ -16,6 +16,9 @@ import OrderDetails from './OderDeatails';
 import ViewDrugs from './ViewDrugs';
 import NdsoCreate from './ndsoCreate';
 import Checks from './checks';
+import Payments from './Payments';
+
+
 
 function App() {
   return (
@@ -25,6 +28,7 @@ function App() {
         <Route path="/loginPage" element={<LoginPage />} />
         <Route path="/NdsologinPage" element={<LoginPages />} />
         <Route path="/checks" element={<Checks />} />
+        <Route path="/payment" element={<Payments />} />
         <Route path="/ndsoCreate" element={<NdsoCreate />} />
         <Route path="/viewDrugs" element={<ViewDrugs />} />
         <Route path="/dashboard" element={<Dashboard />} />

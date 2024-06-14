@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Payments from './Payments';
+import DropIn from 'braintree-web-drop-in-react';
 
 function Checkout(props) {
   const [paymentMethod, setPaymentMethod] = useState('');
   const [name, setName] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+  const [instance, setInstance] = useState(null);
+  const [clientToken, setClientToken] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiryDate, setExpiryDate] = useState('');
   const [cvv, setCvv] = useState('');
@@ -42,9 +47,46 @@ function Checkout(props) {
     quantity : '',
     amount: '',
     phone_number:'',
+    payment_method_nonce:'Credit Card',
     status:'Pending'
 
   });
+  const [valueses, setValueses] = useState({
+    
+    clientName: '',
+    amount: '',
+    payment_method_nonce:'Credit Card',
+    status:'Pending'
+
+  });
+
+useEffect(() => {
+    // Fetch the client token from the server
+    axios.get('http://localhost:5000/client_token')
+        .then(response => {
+            setClientToken(response.data);
+            setIsLoading(false);
+        })
+        .catch(error => {
+            console.error('Error fetching client token:', error);
+            setIsLoading(false);
+        });
+}, []);
+
+const handlePay =  (event) => {
+
+event.preventDefault();
+axios.post('http://localhost:5000/process_payment', valueses)
+  .then((res) => {
+    navigate('/View'); // Navigate to the View page after submission
+  })
+  .catch((err) => {
+    setError('Error creating drug. Please try again.');
+    console.log(err);
+  });
+    
+};
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -221,22 +263,34 @@ function Checkout(props) {
         </div>
         {paymentMethod === 'creditCard' && (
           <>
-            <div className="form-group">
-              <label htmlFor="name">Name on Card:</label>
-              <input type="text" id="name" name="name" value={values.card_name} onChange={(e) => setValues({ ...values, card_name: e.target.value })}  required />
+            <h1>Client Side</h1>
+            <input
+                type="text"
+                placeholder="Client Name"
+                value={valueses.clientName}
+                onChange={(e) => setValueses({ ...valueses, clientName: e.target.value })}
+            />
+            <input
+                type="number"
+                placeholder="Amount"
+                value={valueses.amount}
+                onChange={(e) => setValueses({ ...valueses, amount: e.target.value })}
+            />
+            {isLoading ? (
+                <p>Loading payment options...</p>
+            ) : clientToken ? (
+                <DropIn
+                    options={{ authorization:clientToken }}
+                    onInstance={instance => setInstance(instance)}
+                />
+            ) : (
+                <p>Failed to load payment options. Please try again later.</p>
+            )}
+            <div className='d-flex form-group mb-3'>
+               <button type="submit" className="btn btn-primary" onClick={handlePay} >Pay Now</button>
+    
             </div>
-            <div className="form-group">
-              <label htmlFor="cardNumber">Card Number:</label>
-              <input type="number" id="cardNumber" name="cardNumber" value={values.card_number} onChange={(e) => setValues({ ...values, card_number: e.target.value })} required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="expiryDate">Expiry Date (MM/YY):</label>
-              <input type="text" id="expiryDate" name="expiryDate" value={values.expiry_date} onChange={(e) => setValues({ ...values, expiry_date: e.target.value })} required />
-            </div>
-            <div className="form-group">
-              <label htmlFor="cvv">CVV:</label>
-              <input type="number" id="cvv" name="cvv" value={values.cvv} onChange={(e) => setValues({ ...values, cvv: e.target.value })} required />
-            </div>
+            
           </>
         )}
          {paymentMethod === 'Mpesa' && (
@@ -277,10 +331,7 @@ function Checkout(props) {
           </div>
         )}
 
-        <div className='d-flex form-group mb-3'>
-        <button type="submit" className="btn btn-primary" onClick={handleSubmit} >Pay Now</button>
-    
-        </div>
+        
         
       </form>
     </div>
