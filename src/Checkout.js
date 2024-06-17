@@ -144,8 +144,8 @@ axios.post('http://localhost:5000/process_payment', valueses)
               type="text"
               className="form-control"
               placeholder=" amount"
-              value={values.drug_name}
-              onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
+              value={values.amount}
+              onChange={(e) => setValues({ ...values, amount: e.target.value })}
             />
           </div>
           </>
