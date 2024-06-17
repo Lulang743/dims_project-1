@@ -39,6 +39,7 @@ function App() {
         <Route path="/view" element={<View />} />
         <Route path="/home" element={<Home />} />
         <Route path="/create" element={<Create />} />
+        <Route path="/update" element={<Update />} />
         <Route path="/checkout" element={<Checkout />} />
       </Routes>
     </Router>

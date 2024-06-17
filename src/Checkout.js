@@ -136,23 +136,16 @@ axios.post('http://localhost:5000/process_payment', valueses)
             <input
               type="text"
               className="form-control"
-              placeholder=" drug name"
+              placeholder=" Pharmacy name"
               value={values.drug_name}
               onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
             />
             <input
-              type="number"
+              type="text"
               className="form-control"
-              placeholder="Quantity"
-              value={values.quantity}
-              onChange={(e) => setValues({ ...values, quantity: e.target.value })}
-            />
-            <input
-              type="number"
-              className="form-control"
-              placeholder="amount"
-              value={values.amount}
-              onChange={(e) => setValues({ ...values, amount: e.target.value })}
+              placeholder=" amount"
+              value={values.drug_name}
+              onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
             />
           </div>
           </>
@@ -162,30 +155,7 @@ axios.post('http://localhost:5000/process_payment', valueses)
            
           <div className="form-group mb-3">
           </div>
-          <div className="d-flex form-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder=" drug name"
-              value={values.drug_name}
-              onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
-            />
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Quantity"
-              value={values.quantity}
-              onChange={(e) => setValues({ ...values, quantity: e.target.value })}
-            />
-            <input
-              type="number"
-              className="form-control"
-              placeholder="amount"
-              value={values.amount}
-              onChange={(e) => setValues({ ...values, amount: e.target.value })}
-            />
-          </div>
-          </>
+         </>
         )}
         {paymentMethod === 'EcoCash' && (
           <>
@@ -222,34 +192,11 @@ axios.post('http://localhost:5000/process_payment', valueses)
            
           <div className="form-group mb-3">
           </div>
-          <div className="d-flex form-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder=" drug name"
-              value={values.drug_name}
-              onChange={(e) => setValues({ ...values, drug_name: e.target.value })}
-            />
-            <input
-              type="number"
-              className="form-control"
-              placeholder="Quantity"
-              value={values.quantity}
-              onChange={(e) => setValues({ ...values, quantity: e.target.value })}
-            />
-            <input
-              type="number"
-              className="form-control"
-              placeholder="amount"
-              value={values.amount}
-              onChange={(e) => setValues({ ...values, amount: e.target.value })}
-            />
-          </div>
           </>
         )}
         </form>
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handlePay}>
         <div className="form-group">
           <label htmlFor="paymentMethod">Payment Method:</label>
           <select id="paymentMethod" value={paymentMethod} onChange={handlePaymentMethodChange}>
@@ -264,18 +211,7 @@ axios.post('http://localhost:5000/process_payment', valueses)
         {paymentMethod === 'creditCard' && (
           <>
             <h1>Client Side</h1>
-            <input
-                type="text"
-                placeholder="Client Name"
-                value={valueses.clientName}
-                onChange={(e) => setValueses({ ...valueses, clientName: e.target.value })}
-            />
-            <input
-                type="number"
-                placeholder="Amount"
-                value={valueses.amount}
-                onChange={(e) => setValueses({ ...valueses, amount: e.target.value })}
-            />
+           
             {isLoading ? (
                 <p>Loading payment options...</p>
             ) : clientToken ? (

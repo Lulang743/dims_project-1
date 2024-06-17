@@ -8,6 +8,16 @@ function View() {
   const [cart, setCart] = useState([]);
   const navigate = useNavigate();
 
+  const [selectedDrugName, setSelectedDrugName] = useState(''); 
+  const [selectedDrugQuantity, setSelectedDrugQuantity] = useState('');
+  const [selectedDrugSno, setSelectedDrugSno] = useState('');
+  const [selectedDrugPrice, setSelectedDrugPrice] = useState('');
+  const [selectedDrugTotal, setSelectedDrugTotal] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+
+  const [error, setError] = useState(''); // Added error state
+
+
   useEffect(() => {
     axios.get('http://localhost:5000/selected')
       .then(res => setData(res.data))
@@ -22,6 +32,14 @@ function View() {
     } else {
       setCart([...cart, { ...drug, quantity: 1, price: drug.price, sno: drug.sno }]);
     }
+
+    setSelectedDrugName(drug.drug_name); 
+    setSelectedDrugQuantity(existingItem ? existingItem.quantity + 1 : 1);
+    setSelectedDrugPrice(drug.price);
+    setSelectedDrugSno(drug.sno);
+    setSelectedDrugTotal(existingItem ? existingItem.quantity * drug.price + drug.price : 1 );
+    setSelectedStatus('Pending');
+    
   };
 
   const removeFromCart = (itemId) => {
@@ -37,7 +55,17 @@ function View() {
   };
 
   const onClick = () => {
-    navigate('/checkout');
+    axios.post('http://localhost:5000/create_drug_order', {selectedDrugName,selectedDrugQuantity,selectedDrugPrice,selectedDrugTotal,selectedDrugSno,selectedStatus})
+      .then((res) => {
+        navigate('/checkout'); // Navigate to the View page after submission
+        clearCart();
+      })
+      .catch((err) => {
+        setError('Error creating drug. Please try again.');
+        console.log(err);
+      });
+    //navigate('/checkout');
+   
   }
 
   return (
@@ -79,6 +107,55 @@ function View() {
             ))}
           </tbody>
         </table>
+        <div className="d-flex form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              value={selectedDrugSno}
+              readOnly
+              placeholder="SNO"
+              onChange={(e) => setSelectedDrugSno({ ...selectedDrugSno, sno: e.target.value })}
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={selectedDrugName}
+              readOnly
+              placeholder="Drug Name"
+            />
+            <input
+              type="text"
+              className="form-control"
+              value={selectedDrugQuantity}
+              readOnly
+              placeholder="Quantity"
+            />
+          </div>
+          <div className="d-flex form-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              value={selectedDrugPrice}
+              readOnly
+              placeholder="Price"
+            />
+
+            <input
+              type="text"
+              className="form-control"
+              value={selectedDrugTotal}
+              readOnly
+              placeholder="Total"
+            />
+            <input
+              type="text"
+              className="form-control"
+              value={selectedStatus}
+              readOnly
+              placeholder="status"
+            />
+          </div>
 
         <h2>Cart Items</h2>
         {cart.length === 0 ? (
@@ -115,6 +192,7 @@ function View() {
         )}
         <button onClick={onClick} className='btn btn-primary' disabled={cart.length === 0}>Checkout</button>
       </div>
+      
     </div>
   );
 
