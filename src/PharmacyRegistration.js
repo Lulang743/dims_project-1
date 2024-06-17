@@ -1,119 +1,133 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import './PharmacyRegistration.css';
+import './RegistrationForm.css';
+import Login from './Login';
 
 const PharmacyRegistration = () => {
-    const navigate = useNavigate();
-    const [errors, setErrors] = useState({});
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [otp, setOtp] = useState('');
+    const [isOtpSent, setIsOtpSent] = useState(false);
+    const [showLogin, setShowLogin] = useState(false);
 
-    const [values, setValues] = useState({
-        pharmacyName: '',
-        pharmacyAddress: '',
-        email: '',
-        password: '',
+    const handleRegister = () => {
+        // Validation logic
+        if (!name || !email || !password || !confirmPassword || !phoneNumber) {
+            alert('All fields are required');
+            return;
+        }
 
-        phoneNumber: ''
-      });
+        if (password.length < 8) {
+            alert('Password should be at least 8 characters long');
+            return;
+        }
 
-    const handleSubmit = (e) => {
-        //let formErrors = {};
+        if (!/[A-Z]/.test(password)) {
+            alert('Password should include at least one uppercase letter');
+            return;
+        }
 
-        // Email validation
-        //if (!email.includes('@')) {
-          //  formErrors.email = "Invalid email format";
-       // }//
+        if (!/[a-z]/.test(password)) {
+            alert('Password should include at least one lowercase letter');
+            return;
+        }
 
-        // Password validation
-        //const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-        //if (!passwordRegex.test(password)) {
-          //  formErrors.password = "Password must be at least 8 characters long and include both letters and numbers";
-        //}
+        if (!/[0-9]/.test(password)) {
+            alert('Password should include at least one number');
+            return;
+        }
 
-        //if (password !== confirmPassword) {
-         //   formErrors.confirmPassword = "Passwords do not match";
-        //}
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            alert('Password should include at least one special character');
+            return;
+        }
 
-        //if (Object.keys(formErrors).length > 0) {
-          //  setErrors(formErrors);
-            //return;
-        //}
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
 
-        // Assuming registration is successful, navigate to the pharmacy dashboard
-       //console.log({ pharmacyName, pharmacyAddress, email, password, phoneNumber });
-        e.preventDefault();
-        axios.post('http://localhost:5000/create_pharmacist', values)
-           .then((res) => {
-            navigate('/loginPage'); // Navigate to the View page after submission
-      })
-      .catch((err) => {
-        //setError('Error creating drug. Please try again.');
-        console.log(err);
-      });
-        navigate('/Home');
+        axios.post('http://localhost:3000/register', { name, email, password, phoneNumber })
+            .then(response => {
+                alert(response.data.message);
+                setIsOtpSent(true);
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Error: Something went wrong');
+            });
     };
 
+    const handleVerify = () => {
+        // Verification logic
+        if (!otp) {
+            alert('OTP is required');
+            return;
+        }
+
+        axios.post('http://localhost:3000/verify', { email, otp })
+            .then(response => {
+                alert(response.data.message);
+                if (response.data.verified) {
+                    // Redirect to login page upon successful OTP verification
+                    setShowLogin(true);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Error: Something went wrong');
+            });
+    };
+
+    const handleLoginClick = () => {
+        setShowLogin(true); // Show the login component
+    };
+
+    if (showLogin) {
+        return <Login />;
+    }
+
     return (
-        <div className="registration-container">
-            <form className="registration-form" onSubmit={handleSubmit}>
-                <h2>Pharmacy SignUp</h2>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        id="pharmacyName"
-                        value={values.pharmacyName}
-                        onChange={(e) => setValues({ ...values, pharmacyName: e.target.value })}
-                        placeholder="Enter Pharmacy Name"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        id="pharmacyAddress"
-                        value={values.pharmacyAddress}
-                        onChange={(e) => setValues({ ...values, pharmacyAddress: e.target.value })}
-                        placeholder="Enter Pharmacy Address"
-                        required
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="email"
-                        id="email"
-                        value={values.email}
-                        onChange={(e) => setValues({ ...values, email: e.target.value })}
-                        placeholder="Enter Email"
-                        required
-                    />
-                    {errors.email && <span className="error-message">{errors.email}</span>}
-                </div>
-                <div className="form-group">
-                    <input
-                        type="password"
-                        id="password"
-                        value={values.password}
-                        onChange={(e) => setValues({ ...values, password: e.target.value })}
-                        placeholder="Enter Password"
-                        required
-                    />
-                    {errors.password && <span className="error-message">{errors.password}</span>}
-                </div>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        id="phoneNumber"
-                        value={values.phoneNumber}
-                        onChange={(e) => setValues({ ...values, phoneNumber: e.target.value })}
-                        placeholder="Enter Phone Number"
-                        required
-                    />
-                </div>
-                <button type="submit">Register</button>
-                <div className="signin-link">
-                    Already have an account? <Link to="/LoginPage">Sign In</Link>
-                </div>
-            </form>
+        <div className="container">
+            {!isOtpSent ? (
+                <>
+                    <div>
+                        <label>Name:</label>
+                        <input type="text" value={name} onChange={e => setName(e.target.value)} />
+                    </div>
+                    <div>
+                        <label>Email:</label>
+                        <input type="email" value={email} onChange={e => setEmail(e.target.value)} />
+                    </div>
+                    <div>
+                        <label>Password:</label>
+                        <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
+                    </div>
+                    <div>
+                        <label>Confirm Password:</label>
+                        <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
+                    </div>
+                    <div>
+                        <label>Phone Number:</label>
+                        <input type="text" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} />
+                    </div>
+                    <button onClick={handleRegister}>Register</button>
+                    <div className="login-link">
+                        <p>Already have an account? <span onClick={handleLoginClick} className="login-link">Click here to login</span></p>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div>
+                        <label>Enter OTP:</label>
+                        <input type="text" value={otp} onChange={e => setOtp(e.target.value)} />
+                    </div>
+                    <button onClick={handleVerify}>Verify</button>
+                </>
+            )}
         </div>
     );
 };
